@@ -1,0 +1,103 @@
+<!-- /snippets/breadcrumb.liquid -->
+{% comment %}
+  Documentation - http://docs.shopify.com/support/your-website/navigation/creating-a-breadcrumb-navigation
+  Rich snippets - Breadcrumbs - https://support.google.com/webmasters/answer/185417?hl=en
+{% endcomment %}
+{% unless template == 'index' or template == 'cart' %}
+<nav class="breadcrumb" role="navigation" aria-label="breadcrumbs">
+  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ shop.url }}" itemprop="url">
+      <span itemprop="title">{{ 'general.breadcrumbs.home' | t }}</span>
+    </a>
+  </div>
+  {% if template contains 'product' %}
+  {% if collection %}
+  &rsaquo;
+  {% if collection.handle %}
+  {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ url }}" itemprop="url">
+      <span itemprop="title">{{ collection.title }}</span>
+    </a>
+  </div>
+  {% endif %}
+  {% endif %}
+  &rsaquo;
+  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ product.url }}" itemprop="url">
+      <span itemprop="title">{{ product.title }}</span>
+    </a>
+  </div>
+  {% elsif template contains 'collection' and collection.handle %}
+  &rsaquo;
+  {% if current_tags %}
+  {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ url }}" itemprop="url">
+      <span itemprop="title">{{ collection.title }}</span>
+    </a>
+  </div>
+  &rsaquo;
+  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ page.url }}" itemprop="url">
+      <span itemprop="title">{{ current_tags | join: " + "  }}</span>
+    </a>
+  </div>
+  {% else %}
+  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ collection.url }}" itemprop="url">
+      <span itemprop="title">{{ collection.title  }}</span>
+    </a>
+  </div>
+  {% endif %}
+  {% elsif template == 'blog' %}
+  &rsaquo;
+  {% if current_tags %}
+  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ blog.url }}" itemprop="url">
+      <span itemprop="title">{{ blog.title }}</span>
+    </a>
+  </div>
+  &rsaquo;
+  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ page.url }}" itemprop="url">
+      <span itemprop="title">{{ current_tags | join: " + " }}</span>
+    </a>
+  </div>
+  {% else %}
+  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ blog.url }}" itemprop="url">
+      <span itemprop="title">{{ blog.title }}</span>
+    </a>
+  </div>
+  {% endif %}
+  {% elsif template == 'article' %}
+  &rsaquo;
+  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ blog.url }}" itemprop="url">
+      <span itemprop="title">{{ blog.title }}</span>
+    </a>
+  </div>
+  &rsaquo;
+  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ article.url }}" itemprop="url">
+      <span itemprop="title">{{ article.title }}</span>
+    </a>
+  </div>
+  {% elsif template contains 'page' %}
+  &rsaquo;
+  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ page.url }}" itemprop="url">
+      <span itemprop="title">{{ page.title }}</span>
+    </a>
+  </div>
+  {% else %}
+  &rsaquo;
+  <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ page.url }}" itemprop="url">
+      <span itemprop="title">{{ page.title }}</span>
+    </a>
+  </div>
+  {% endif %}
+</nav>
+{% endunless %}
