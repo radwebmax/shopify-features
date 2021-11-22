@@ -10,6 +10,7 @@ dataType: 'json',
 success: function (data) {
   console.log('Product added');
   setCookie('product', id);
+  //Additional code for Motion theme
   $('body').trigger('added.ajaxProduct');
   document.dispatchEvent(new CustomEvent('ajaxProduct:added'));
 },
