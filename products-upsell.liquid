@@ -1,0 +1,12 @@
+{% comment %} Display products which are not in cart {% endcomment %}
+
+{%- assign cart_ids = cart.items | map: "product_id" -%}
+{%- assign cart_ids_string = cart_ids | join: ',' -%}
+{%- for product in collections['cart-upsell'].products -%}
+  {%- unless cart_ids_string contains product.id -%}
+    {%- if product.available -%}
+      {% comment %} Display product {% endcomment %}
+      {%- break -%}
+    {%- endif -%}
+  {%- endunless -%}
+{%- endfor -%}
