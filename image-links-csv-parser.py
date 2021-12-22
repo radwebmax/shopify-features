@@ -6,12 +6,12 @@ ready product.csv and empty product_new.csv files in the same file directory
 import csv
 
 
-with open("products.csv", encoding='Windows-1251 ') as r_file:
+with open("products.csv", newline='') as r_file:
     # Creates object reader, with separator in you csv file ";"
     file_reader = csv.reader(r_file, delimiter = ";")
     #Be carefull with encoding, set the needed (utf-8 by default)
-    with open("products_new.csv", mode="w", encoding='Windows-1251 ') as w_file:
-        file_writer = csv.writer(w_file, delimiter = ";", lineterminator="\r")
+    with open("products_new.csv", mode="w", newline='') as w_file:
+        file_writer = csv.writer(w_file, delimiter = ";")
         # Counter for products(rows in file)
         count = 0
         # Loop through products(rows) in file
@@ -43,3 +43,6 @@ with open("products.csv", encoding='Windows-1251 ') as r_file:
             if count == 3158:
                 break
         print(f'Total products in file: {count}')
+
+r_file.close()
+w_file.close()
